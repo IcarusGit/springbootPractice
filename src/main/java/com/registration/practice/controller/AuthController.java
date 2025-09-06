@@ -12,10 +12,12 @@ import com.registration.practice.model.Users;
 import com.registration.practice.security.JwtUtil;
 import com.registration.practice.service.AuthService;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/auth")
+@Tag(name = "Authentication", description = "Authentication operations")
 public class AuthController {
     private final AuthService authService;
 

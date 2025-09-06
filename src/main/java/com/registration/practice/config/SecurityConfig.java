@@ -1,4 +1,4 @@
-package com.registration.practice.security;
+package com.registration.practice.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -13,9 +13,17 @@ public class SecurityConfig {
         http
             .csrf(csrf -> csrf.disable()) // disable CSRF for APIs
             .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/auth/register", "/auth/login").permitAll() // allow register + login
-                .anyRequest().authenticated() // everything else will require auth (for later)
+                .requestMatchers(
+                    "/auth/register",
+                    "/auth/login",
+                    "/h2-console/**",
+                    "/v3/api-docs/**",
+                    "/swagger-ui.html",
+                    "/swagger-ui/**"
+                ).permitAll() // allow register, login, h2, and swagger
+                .anyRequest().authenticated() // everything else will require auth
             )
+            .headers(headers -> headers.frameOptions(frameOptions -> frameOptions.disable()))
             .formLogin(form -> form.disable())
             .httpBasic(basic -> basic.disable());
 
